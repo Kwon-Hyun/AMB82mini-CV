@@ -74,9 +74,9 @@ def warp_qr(img, points):
     
     return warped_img
 
-def show_axes(cmtx, dist, in_source):
-    # video를 스트리밍할 경우
-    cap = cv.VideoCapture(in_source)    
+def show_axes(cmtx, dist, camera_id=0): # 원래 (cmtx, dist, in_source)
+    # video 실시간 스트리밍
+    cap = cv.VideoCapture(camera_id)    
 
     qr = cv.QRCodeDetector()
 
@@ -117,7 +117,7 @@ def show_axes(cmtx, dist, in_source):
                 print(f"QR 코드 기울기 (도): roll={roll:.2f}, pitch={pitch:.2f}, yaw={yaw:.2f}")
                 
                 # 기울기에 따른 로봇팔 조정 방법 출력
-                print("로봇팔 기울기 조정 방법:")
+                print("로봇팔 기울기 조정 방법 :")
                 if roll > 0:
                     print(f"QR 코드가 오른쪽으로 {roll:.2f}도 기울어졌습니다. 로봇팔을 왼쪽으로 기울여야 합니다.")
                 elif roll < 0:
@@ -141,7 +141,7 @@ def show_axes(cmtx, dist, in_source):
         cv.imshow('frame', img)
 
         k = cv.waitKey(20)
-        if k == 27: break  # 27 is ESC key.
+        if k == 27: break  # 27 : ESC key
 
     cap.release()
     cv.destroyAllWindows()
@@ -151,6 +151,7 @@ if __name__ == '__main__':
     #read camera intrinsic parameters.
     cmtx, dist = read_camera_parameters()
 
+    '''
     input_source = 'media/test_me.MOV'
     # test.mp4로 할 때 정확도가 좀 더 좋음.
     # test_me.MOV는 내 폰으로 촬영해서 올린 건데, 영상도 좀 느리고 정확도도 다소 떨어짐. frame을 너무 끊어서 그런듯?
@@ -159,3 +160,8 @@ if __name__ == '__main__':
         input_source = int(sys.argv[1])
 
     show_axes(cmtx, dist, input_source)
+    '''
+
+    # 실시간 카메라로 QR 코드 감지 및 보정 수행
+    camera_id = 0  # AMB82 Mini 보드의 카메라 ID에 맞게 변경
+    show_axes(cmtx, dist, camera_id)
