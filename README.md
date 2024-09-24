@@ -3,6 +3,31 @@
 - Python 3.9.7
 Camera Calibration 예정
 
+### 실시간 스트림으로 탐지한 거 보여줄게용? 
+<br>
+<img width="1257" alt="라이브1" src="https://github.com/user-attachments/assets/1c6b7c57-351b-4de0-acca-c2533d503a9b">
+
+<img width="1194" alt="라이브2" src="https://github.com/user-attachments/assets/7bb488a9-3ec0-4520-a6b0-2a9047d765dd">
+
+<img width="1152" alt="라이브3" src="https://github.com/user-attachments/assets/30a15a4e-ab13-4553-a0b6-2608171133d3">
+
+<img width="1239" alt="라이브4" src="https://github.com/user-attachments/assets/48eb9bb7-d265-47b5-bedb-34dc8416326d">
+
+
+
+
+### 터미널 출력 예시도 보여줄게용?
+### qr 왜곡 변환한 거도 같이 보여줄게용용
+<br>
+<img width="702" alt="터미널1" src="https://github.com/user-attachments/assets/6c696731-4cdd-4f4e-a111-d066e4f7e2ba">
+
+<img width="718" alt="터미널2" src="https://github.com/user-attachments/assets/fd640047-7a74-41bc-b912-a80c7829d3c8">
+
+<br><br>
+그치만 모든 형태의 qr을 잘 인식하는 것은 아님. 하나의 앵글에 여러 개의 qrcode가 잡혀도, 1개의 마커밖에 인식 못함..핑- ㅠ
+
+<br><br>
+
 **기존 제공 dataset 결과**
 <br>
 ![스크린샷 2024-09-23 오후 5 02 36](https://github.com/user-attachments/assets/0596f86c-34a7-4b33-a9fc-66c6697f453b)
