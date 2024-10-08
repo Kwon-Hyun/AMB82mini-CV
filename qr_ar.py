@@ -58,18 +58,18 @@ def get_orientation_from_rvec(rvec):
         pitch = np.arctan2(-rotation_matrix[2, 0], sy)
         yaw = 0
 
-    # Converting radians to degrees
+    # radian으로 추출된 값을 degree로 변경하여 반환!
     return np.degrees(roll), np.degrees(pitch), np.degrees(yaw)
 
 def warp_qr(img, points):
-    # Get QR code corners
+    # QR code 모서리(꼭짓점) 좌표 구하기
     pts_src = points.reshape((4, 2))
     pts_dst = np.array([[0, 0], [300, 0], [300, 300], [0, 300]], dtype='float32')
     
-    # Compute the perspective transform matrix
+    # 원근 변환 행렬 계산
     matrix = cv.getPerspectiveTransform(pts_src, pts_dst)
     
-    # Warp the perspective to get a top-down view of the QR code
+    # top-down view 관점에서 바라본 QR code로 형태 복원
     warped_img = cv.warpPerspective(img, matrix, (300, 300))
     
     return warped_img
@@ -89,7 +89,7 @@ def show_axes(cmtx, dist, camera_id=0): # 원래 (cmtx, dist, in_source)
         if ret_qr:
             axis_points, rvec, tvec = get_qr_coords(cmtx, dist, points)
 
-            # BGR color format
+            # BGR color 형태
             colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (0, 0, 0)]
 
             # check axes points are projected to camera view.
@@ -109,7 +109,7 @@ def show_axes(cmtx, dist, camera_id=0): # 원래 (cmtx, dist, in_source)
 
                     cv.line(img, origin, p, c, 5)
 
-                # 카메라 좌표계 기준 QR 코드의 위치 정보 출력 (tvec: [x, y, z])
+                # 카메라 좌표계 기준 QR 코드의 위치 정보 출력 (평행이동벡터(tvec) : [x, y, z])
                 print(f"QR 코드의 위치 (카메라 좌표계 기준): x={tvec[0][0]:.2f}, y={tvec[1][0]:.2f}, z={tvec[2][0]:.2f}")
                 
                 # 회전 벡터(rvec)를 기반으로 QR 코드의 기울기(roll, pitch, yaw) 계산
@@ -117,21 +117,21 @@ def show_axes(cmtx, dist, camera_id=0): # 원래 (cmtx, dist, in_source)
                 print(f"QR 코드 기울기 (도): roll={roll:.2f}, pitch={pitch:.2f}, yaw={yaw:.2f}")
                 
                 # 기울기에 따른 로봇팔 조정 방법 출력
-                print("로봇팔 기울기 조정 방법 :")
+                print("촬영 기기의 기울기 조정 방법 :")
                 if roll > 0:
-                    print(f"QR 코드가 오른쪽으로 {roll:.2f}도 기울어졌습니다. 로봇팔을 왼쪽으로 기울여야 합니다.")
+                    print(f"QR 코드가 오른쪽으로 {roll:.2f}도 기울어졌습니다. 스마트폰을 왼쪽으로 {roll:.2f}도 기울여야 합니다.")
                 elif roll < 0:
-                    print(f"QR 코드가 왼쪽으로 {abs(roll):.2f}도 기울어졌습니다. 로봇팔을 오른쪽으로 기울여야 합니다.")
+                    print(f"QR 코드가 왼쪽으로 {abs(roll):.2f}도 기울어졌습니다. 스마트폰을 오른쪽으로 {abs(roll):.2f}도 기울여야 합니다.")
                 
                 if pitch > 0:
-                    print(f"QR 코드가 앞으로 {pitch:.2f}도 기울어졌습니다. 로봇팔을 뒤로 기울여야 합니다.")
+                    print(f"QR 코드가 앞으로 {pitch:.2f}도 기울어졌습니다. 스마트폰을 뒤로 {pitch:.2f}도 기울여야 합니다.")
                 elif pitch < 0:
-                    print(f"QR 코드가 뒤로 {abs(pitch):.2f}도 기울어졌습니다. 로봇팔을 앞으로 기울여야 합니다.")
+                    print(f"QR 코드가 뒤로 {abs(pitch):.2f}도 기울어졌습니다. 스마트폰을 앞으로 {abs(pitch):.2f}도 기울여야 합니다.")
                 
                 if yaw > 0:
-                    print(f"QR 코드가 시계 방향으로 {yaw:.2f}도 회전했습니다. 로봇팔을 반시계 방향으로 회전해야 합니다.")
+                    print(f"QR 코드가 시계 방향으로 {yaw:.2f}도 회전했습니다. 스마트폰을 반시계 방향으로 {yaw:.2f}도 회전해야 합니다.")
                 elif yaw < 0:
-                    print(f"QR 코드가 반시계 방향으로 {abs(yaw):.2f}도 회전했습니다. 로봇팔을 시계 방향으로 회전해야 합니다.")
+                    print(f"QR 코드가 반시계 방향으로 {abs(yaw):.2f}도 회전했습니다. 스마트폰을 시계 방향으로 {abs(yaw):.2f}도 회전해야 합니다.")
 
                 # QR 코드의 왜곡 보정 및 이미지 저장
                 warped_img = warp_qr(img, points)

@@ -2,7 +2,7 @@ import qrcode
 from PIL import Image
 
 # QR 코드에 포함할 좌표 정보
-data = "240923_QR_test"
+data = "240924_QR_test"
 
 # 지정된 크기의 QR 코드 생성
 qr = qrcode.QRCode(
@@ -22,7 +22,7 @@ qr_img = qr.make_image(fill='black', back_color='white')
 qr_img = qr_img.resize((300, 300), Image.ANTIALIAS)
 
 # QR 코드 이미지 저장
-qr_img.save("qr_demo2.png")
+qr_img.save("qr_demo.png")
 
 # QR 코드 크기를 출력 (출력 시 해상도에 따라 다름)
 print("QR 코드 크기: 300 x 300 pixel")
