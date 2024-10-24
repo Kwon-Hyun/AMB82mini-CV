@@ -40,3 +40,4 @@ while cap.isOpened():
 
         cv.circle(img, (int(x_center), int(y_center)), ())
         
+    
